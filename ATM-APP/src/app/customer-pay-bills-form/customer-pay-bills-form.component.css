@@ -1,0 +1,12 @@
+input.custom-numeric-input::-webkit-outer-spin-button,
+input.custom-numeric-input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.custom-numeric-input {
+  text-align: right;
+}
+
+input.custom-numeric-input {
+  -moz-appearance: textfield;
+}

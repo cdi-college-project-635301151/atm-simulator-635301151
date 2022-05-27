@@ -1,0 +1,72 @@
+<h3>Loans & Payments</h3>
+
+<mat-dialog-content class="mat-typography">
+
+
+  <form [formGroup]="loanPaymentForm!">
+    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+    <!-- Pay From Form control -->
+    <mat-form-field appearance="fill">
+      <mat-label>Pay From</mat-label>
+      <mat-select formControlName="payFrom">
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of availableAccounts" [label]="group.accountType.toString() |titlecase">
+          <mat-option [value]="group.accountNumber">
+            {{group.accountNumber}}
+            <span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            {{ group.credit.toString() | currency }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="payFrom!.hasError('required')">
+        Please select an account.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Pay To From control -->
+    <mat-form-field appearance="fill">
+      <mat-label>Pay To</mat-label>
+      <mat-select formControlName="payTo">
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of mortgageAccounts" [label]="group.accountType.toString() |titlecase">
+          <mat-option [value]="group.accountNumber">
+            {{group.accountNumber}}
+            <span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            {{ group.credit.toString() | currency }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="payTo!.hasError('required')">
+        Please select an account.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- AMOUNT Form control -->
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" class="example-right-align" placeholder="0" formControlName="amount">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-error *ngIf="amount!.hasError('required')">
+        Amount is required.
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" *ngIf="!isSubmit" [disabled]="!loanPaymentForm!.valid && errorMessage != ''"
+    (click)="sumitRequest()">
+    <span>Submit</span>
+  </button>
+  <button mat-raised-button *ngIf="isSubmit" [disabled]="isSubmit">
+    <mat-icon *ngIf="isSubmit">
+      <mat-spinner color="accent" diameter="20">
+      </mat-spinner>
+    </mat-icon>
+    <span>Sending Request</span>
+  </button>
+  <button mat-raised-button mat-dialog-close color="accent" *ngIf="!isSubmit" [disabled]="isSubmit"
+    cdkFocusInitial>Cancel</button>
+</mat-dialog-actions>

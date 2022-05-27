@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Pay Bills Form</h1>
+<div mat-dialog-content *ngIf="payBillsForm">
+  <span class="text-warning">$1.25 transaction fee will be automatically included.</span>
+  <form [formGroup]="payBillsForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Account</mat-label>
+      <mat-select formControlName="accountFrom">
+        <mat-option>Clear</mat-option>
+        <mat-optgroup *ngFor="let group of accountGroupInterface" [label]="group.accountName.toString() |titlecase">
+          <mat-option *ngFor="let acc of group.accounts" [value]="acc.accountNumber">
+            <span>Account#: </span>{{acc.accountNumber}}
+            <span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>Balance: </span>{{acc.credit.toString() | currency}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="accountFromFormController.touched && accountFromFormController.invalid">
+        <mat-error *ngIf="accountFromFormController.hasError('required')">Please select account.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select Customer</mat-label>
+      <mat-select formControlName="customer">
+        <mat-option>Clear</mat-option>
+        <mat-option *ngFor="let payee of data.userPayees" [value]="payee.accountNumber">
+          <span>{{ payee.customerName }} - </span>
+          <span>{{ payee.accountNumber }}</span>
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="customerFormController.touched && customerFormController.invalid">
+        <mat-error *ngIf="customerFormController.hasError('required')">Please select a customer.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" class="custom-numeric-input" formControlName="amount" placeholder="0.00"
+        (blur)="onBlur()">
+      <span matPrefix>$&nbsp;</span>
+      <mat-error *ngIf="amountFormController.touched && amountFormController.invalid">
+        <mat-error *ngIf="amountFormController.hasError('required')">Amount to pay is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    {{payFormError}}
+  </form>
+  <span *ngIf="lineOfCreditForm && lineOfCreditAccount">
+    <span class="text-warning">${{lineOfCreditToloanAmount.value}} will be automatically allocated to your line of
+      credit account.</span>
+  </span>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [disabled]="!payBillsForm!.valid" (click)="submitForm()">Submit</button>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
+</div>

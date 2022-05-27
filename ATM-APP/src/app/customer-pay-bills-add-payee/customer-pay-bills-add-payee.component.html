@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Add Payee Form</h1>
+<div mat-dialog-content *ngIf="addPayeeForm">
+
+  <form [formGroup]="addPayeeForm">
+    <mat-form-field hintLabel="Max 10 characters" appearance="fill" formGroupName="customers">
+      <mat-label>Account Name</mat-label>
+      <input matInput formControlName="customerName" maxlength="20" placeholder="Ex. Nougat">
+      <mat-hint align="end">{{customerName.value?.length || 0}}/20</mat-hint>
+      <mat-error *ngIf="customerName.touched && customerName.invalid">
+        <mat-error>
+          <span *ngIf="customerName.hasError('required')">Customer name is required.</span>
+          <span *ngIf="customerName.hasError('minlength')">Customer Name must contain 3 characters mininum.</span>
+        </mat-error>
+
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 15 characters" appearance="fill" formGroupName="customers">
+      <mat-label>Account Name</mat-label>
+      <input matInput type="text" pattern="\d*" formControlName="accountNumber" maxlength="15"
+        placeholder="Ex. 123456789" class="custom-input">
+      <mat-hint align="end">{{countLenAccountNumber}}/15</mat-hint>
+      <mat-error *ngIf="customerAccountNumber.touched && customerAccountNumber.invalid">
+        <mat-error>
+          <span *ngIf="customerAccountNumber.hasError('required')">
+            Account number is required.
+          </span>
+          <span *ngIf="customerAccountNumber.hasError('minlength')">
+            Account number must contain a minimum of 6 digits.
+          </span>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <mat-error *ngIf="isPayeeExisting" class="pt-2">
+    {{ addPayeeFormErrorMessage }}
+  </mat-error>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [disabled]="!addPayeeForm!.valid || isPayeeExisting"
+    (click)="submitPayee()">Submit</button>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
+</div>

@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+html,
+body {
+  height: 100%;
+  background: rgb(235 234 234 / 14%);
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+
+}
+
+.mat-header-cell {
+  font-size: medium;
+  background: lightgrey;
+  color: black;
+}
+
+
+
+.mat-tab-body {
+  padding: 0 0 15px 0 !important;
+}
+
+tr.mat-header-row {
+  height: 40px !important;
+}
+
+
+.div-divider {
+  height: 1rem;
+
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+}
+
+.pt-15 {
+  padding-top: 15px !important;
+}
+
+.container.mt-10 {
+  margin-top: 10px;
+}
+
+/* .mat-select-value-text {
+  display: block;
+}
+
+.mat-select-min-line {
+  display: block;
+  grid-column: 1;
+  justify-content: space-between;
+} */
+
+

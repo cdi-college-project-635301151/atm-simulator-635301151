@@ -1,0 +1,34 @@
+<div *ngIf="userAuth">
+  <mat-toolbar color="primary" *ngIf="!userAuth.pinUpdate">
+    <mat-toolbar-row>
+      <span>SDA Bank</span>
+      <span class="nav-spacer"></span>
+      <div *ngIf="userAuth.userType === '007'">
+        <button mat-raised-button color="primary" aria-label="ATM Setup" (click)="atm()">
+          <span> ATM Setup </span>
+          <mat-icon>local_atm</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" aria-label="clients" (click)="customers()">
+          <span> Clients </span>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <span> {{ user!.firstName.toString() | titlecase}} </span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before" class="w-220">
+        <button mat-menu-item>
+          <span>Update PIN</span>
+          <mat-icon class="float-end m-10" color="primary">lock_open</mat-icon>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <span>Logout</span>
+          <mat-icon class="float-end m-10" color="primary">power_settings_new</mat-icon>
+        </button>
+      </mat-menu>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

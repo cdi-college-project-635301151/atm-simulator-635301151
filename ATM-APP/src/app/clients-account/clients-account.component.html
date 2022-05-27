@@ -1,0 +1,86 @@
+<app-nav-bar></app-nav-bar>
+<div class="container mt-10">
+  <mat-card class="example-card">
+    <mat-card-subtitle>Clients Account</mat-card-subtitle>
+    <mat-card-title *ngFor="let user of userInformation"> {{ user.firstName + ' ' + user.lastName |
+      titlecase}}
+    </mat-card-title>
+    <mat-card-content>
+      <p *ngFor="let user of userInformation"> {{ (user.address.streetAddress.toString() | titlecase) +
+        (user.address.addressDesc ===
+        '' ? ' ' : "") +
+        (user.address.addressDesc.toString() | titlecase) +
+        (user.address.city.toString() | titlecase) + ", " + (user.address.province.toString() |
+        uppercase) +
+        ", " +
+        (user.address.postal.toString() | uppercase)}} </p>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input type="text" matInput (keyup)="applyFilter($event)" #input>
+          </mat-form-field>
+        </div>
+        <div class="col pt-15" align="end">
+          <app-clients-account-menu-button [userInformation]="userInformation" [userAccounts]="userAccounts">
+          </app-clients-account-menu-button>
+        </div>
+      </div>
+
+      <table mat-table [dataSource]="accountsDb!">
+        <ng-container matColumnDef="rowNum">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+          <td mat-cell *matCellDef="let account"> {{ getIndex(account._id) }}. </td>
+
+        </ng-container>
+
+        <ng-container matColumnDef="accountType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Type</th>
+          <td mat-cell *matCellDef="let account"> {{ account.accountType | titlecase }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Number</th>
+          <td mat-cell *matCellDef="let account"> {{ account.accountNumber }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Blance</th>
+          <td mat-cell *matCellDef="let account">
+            <span [ngClass]="account.credit > 0 ? 'text-success' : 'text-danger'">
+              {{ account.credit | currency }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let account"> {{ account.isActive ? 'Active' : 'Inactive' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>History</th>
+          <td mat-cell *matCellDef="let account">
+            <button mat-icon-button aria-label="View Transactions" (click)="openAccountHistory(account.accountNumber)">
+              <mat-icon color="primary">find_in_page</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnHeaders"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnHeaders;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="6" *ngIf="input.value">No data matching the filter "{{ input.value }}"
+          </td>
+          <td class="mat-cell" colspan="6" *ngIf="!input.value">No Records Found</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 15, 20, 30, 50, 100]"></mat-paginator>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

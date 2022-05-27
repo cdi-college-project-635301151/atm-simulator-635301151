@@ -1,0 +1,13 @@
+.mat-column-value {
+  width: 50px !important;
+}
+
+.mat-card-content {
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+/* tr.mat-row,
+tr.mat-footer-row {
+  height: 30px;
+} */

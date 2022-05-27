@@ -1,0 +1,87 @@
+<figure class="text-start" *ngIf="data.userAccount">
+  <blockquote class="blockquote">
+    <p>
+      {{ data.userAccount.accountType.toString() | titlecase }} Account
+    </p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    Account#: <cite title="Account Number"> {{ data.userAccount.accountNumber }} </cite>
+  </figcaption>
+  <figcaption class="blockquote-footer">
+    Account#: <cite title="Available Balance">
+      <span [ngClass]="data.userAccount.credit > 0 ? 'text-success' : 'text-danger'">{{
+        data.userAccount.credit.toString() | currency }}</span>
+    </cite>
+  </figcaption>
+</figure>
+<mat-dialog-content class="mat-typography">
+
+  <div class="accountSelector" *ngIf="accountSelector!.length > 0">
+    <mat-form-field appearance="fill" [formGroup]="accountSelectorForm!">
+      <mat-label>Select Account</mat-label>
+      <mat-select formControlName="accountSelector">
+        <mat-optgroup *ngFor="let group of accountSelector" [label]="group.accountName.toString() |titlecase">
+          <mat-option *ngFor="let acc of group.accounts" [value]="acc.accountNumber">
+            {{acc.accountNumber}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+
+  <mat-grid-list cols="3" rowHeight="100px">
+    <mat-grid-tile colspan="3" class="bg-screen">
+      <div class="bg-dark text-success">
+        <div class="child">
+          {{ depositValue | currency }}
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="3" rowHeight="3:1">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows">
+      <button mat-stroked-button [style.color]="tile.color" (click)="addDeposit(tile.value)" class="big-button">
+        {{ tile.text }}
+      </button>
+
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button text-warning" (click)="correction()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button (click)="addDeposit(0)" class="big-button">
+        0
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button" (click)="clearAll()" color="accent">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button" color="accent" mat-dialog-close>
+        Cancel
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <button mat-stroked-button class="big-button" [disabled]="depositValue <= 0" (click)="submitDeposit()">
+        <mat-icon>keyboard_return</mat-icon>
+        <span> [Deposit]</span>
+      </button>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+
+
+</mat-dialog-content>

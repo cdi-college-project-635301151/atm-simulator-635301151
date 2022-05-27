@@ -1,0 +1,30 @@
+.mat-card-footer {
+  padding: 0px 16px 16px !important;
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.big-button {
+  height: 95%;
+  width: 100%;
+}
+
+.bg-screen {
+  font-weight: 600;
+  font-size: xx-large;
+}
+
+.card-title {
+    font-weight: 500;
+    font-size: large;
+}
+
+.m-r5 {
+  margin-right: 0.313rem
+}
+
+.m-t5 {
+  margin-top: 0.313rem;
+}

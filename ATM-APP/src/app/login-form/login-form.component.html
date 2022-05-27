@@ -1,0 +1,65 @@
+<div class="container-fluid p-200">
+
+  <mat-card class="form-width start-50 translate-middle">
+    <div *ngIf="atm" class="text-center">
+      <figure class="text-center" *ngIf="!atm.isOpen">
+        <blockquote class="blockquote">
+          <p>We are sorry for incovinience, the ATM is temporarily close.</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+          Please contact our<cite title="ATM Closed"> Cusomer Service</cite> for any queries or questions.
+        </figcaption>
+      </figure>
+    </div>
+    <mat-card-subtitle>Login Form</mat-card-subtitle>
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <mat-error *ngIf="userAuth">
+          <p class="text-center">{{ userAuth!.error.errorMessage }}</p>
+        </mat-error>
+        <mat-form-field appearance="outline">
+          <mat-label>User Code</mat-label>
+          <input matInput placeholder="Enter you Code here" formControlName="userCode">
+          <mat-icon matSuffix>assignment_ind</mat-icon>
+          <mat-error *ngIf="loginForm.get('userCode')!.hasError('pattern') && loginForm.get('userCode')!.touched">
+            <p>Invalid Usercode pattern. Must not contain any space or letters.</p>
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('userCode')!.hasError('required') && loginForm.get('userCode')!.touched">
+            <p>Usercode is required.</p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>User Pin</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter you PIN here"
+            formControlName="userPin">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('userPin')!.hasError('pattern') && loginForm.get('userPin')!.touched">
+            <p>Invalid User PIN pattern. Must not contain any space or letters.</p>
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('userPin')!.hasError('required') && loginForm.get('userPin')!.touched">
+            <p>User PIN is required.</p>
+          </mat-error>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+
+    <mat-divider inset></mat-divider>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" [disabled]="!loginForm.valid" (click)="login()">Login</button>
+    </mat-card-actions>
+    <!-- <mat-card-footer>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer> -->
+  </mat-card>
+
+
+
+
+
+</div>

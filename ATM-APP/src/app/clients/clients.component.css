@@ -1,0 +1,46 @@
+mat-form-field {
+  width: 100%;
+}
+
+.w-90p {
+  width: 90%;
+}
+
+.w-100p {
+  width: 100%;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+p span {
+  display: block;
+}
+
+p[name="custom"] {
+  padding-top: 15px;
+}
+
+span[name="subtitle"] {
+  font-size: small;
+}
+
+
+.pt-15 {
+  padding-top: 0.938rem;
+}
+
+.cdk-column-actions {
+  width: 15px !important;
+  text-align: center;
+}
+
+.cdk-column-isEnabled {
+  text-align: center;
+}
+
+/* tr.mat-row,
+tr.mat-footer-row {
+  height: 30px;
+} */

@@ -1,0 +1,16 @@
+.example-right-align {
+  text-align: right;
+}
+
+input.text-end::-webkit-outer-spin-button,
+input.text-end::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.text-end {
+  -moz-appearance: textfield;
+}
+
+.blockquote {
+  font-size: 1.5rem
+}

@@ -1,0 +1,74 @@
+<figure class="text-start" *ngIf="data.userAccount">
+  <blockquote class="blockquote">
+    <p>
+      {{ data.userAccount.accountType.toString() | titlecase }} Account
+    </p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    Account#: <cite title="Account Number"> {{ data.userAccount.accountNumber }} </cite>
+  </figcaption>
+  <figcaption class="blockquote-footer">
+    Balance: <cite title="Account Balance">
+      <span class="text-success">{{ data.userAccount.credit.toString() | currency}}</span>
+    </cite>
+  </figcaption>
+</figure>
+<div mat-dialog-content class="mat-typography">
+
+  <div class="text-danger" *ngIf="withdrawalErrorString">
+    <p class="p-lr-6">{{ withdrawalErrorString }}</p>
+  </div>
+
+  <mat-grid-list cols="3" rowHeight="100px">
+    <mat-grid-tile colspan="3" class="bg-screen">
+      <div class="bg-dark text-success">
+        <div class="child">
+          {{ withdrawalAmount | currency }}
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="3" rowHeight="3:1">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows">
+      <button mat-stroked-button [style.color]="tile.color" (click)="addDeposit(tile.value)" class="big-button">
+        {{ tile.text }}
+      </button>
+
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button text-warning" (click)="correction()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button (click)="addDeposit(0)" class="big-button">
+        0
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button" (click)="clearAll()" color="accent">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-stroked-button class="big-button" color="accent" mat-dialog-close>
+        Cancel
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <button mat-stroked-button class="big-button" [disabled]="withdrawalAmount <= 0 || withdrawalError"
+        (click)="submitRequest()">
+        <mat-icon>keyboard_return</mat-icon>
+        <span> [Submit]</span>
+      </button>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+</div>

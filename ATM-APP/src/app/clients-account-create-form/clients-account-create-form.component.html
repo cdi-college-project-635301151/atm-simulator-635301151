@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-header text-center p-3">
+    <blockquote class="blockquote m-0">
+      <p>Clients Account Form</p>
+    </blockquote>
+  </div>
+  <div class="card-body">
+
+    <form [formGroup]="createAccountForm!">
+      <mat-form-field appearance="fill">
+        <mat-label>Select Account</mat-label>
+        <mat-select formControlName="accountSelector">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let account of clientAccounts; let i = index" [value]="account.code">
+            {{ account.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Account Number</mat-label>
+        <input matInput disabled [value]="accountNumber" class="text-dark">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" floatLabel="always" [hidden]="accountSelector!.value === 3">
+        <mat-label>First Time Deposit</mat-label>
+        <input matInput type="number" class="text-end" placeholder="0" formControlName="deposit">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+      </mat-form-field>
+
+    </form>
+
+
+  </div>
+  <div class="card-footer" align="end">
+    <button mat-flat-button color="primary" [disabled]="!createAccountForm!.valid" (click)="onAccountFormSubmit()">
+      Submit </button>
+    <button mat-flat-button color="accent" class="ms-2" mat-dialog-close> Cancel</button>
+  </div>
+</div>

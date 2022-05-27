@@ -1,0 +1,91 @@
+<app-nav-bar></app-nav-bar>
+<div class="container mt-10">
+  <mat-card class="example-card">
+    <mat-card-subtitle>ATM Dashboard</mat-card-subtitle>
+    <mat-card-title *ngIf="atm">Balance: {{ atm.balance?.toString() | currency }}
+    </mat-card-title>
+    <mat-card-content>
+
+      <div class="row">
+
+        <!-- ATM TRANSACTION FILTER -->
+        <div class="col">
+          <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          </mat-form-field>
+        </div>
+
+        <!-- ATM MENU BUTTON -->
+        <div class="col" align="end">
+          <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu" aria-label="ATM Menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="patchAtmStatus(false)" *ngIf="atm?.isOpen">
+              <mat-icon>lock</mat-icon>
+              <span>Lock ATM</span>
+            </button>
+            <button mat-menu-item (click)="patchAtmStatus(true)" *ngIf="atm?.isOpen === false">
+              <mat-icon>lock_open</mat-icon>
+              <span>Unlock ATM</span>
+            </button>
+            <button mat-menu-item (click)="openAtmDeposit()">
+              <mat-icon>local_atm</mat-icon>
+              <span>Deposit</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+
+
+
+      <table mat-table [dataSource]="dataSource!" class="example-table">
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Posted Date</th>
+          <td mat-cell *matCellDef="let transactions"> {{ transactions.createdAt | date }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let transactions">
+            <span class="text-success">Posted</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let transactions"> {{ getIndex(transactions._id) }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountNumber">
+          <th mat-header-cell *matHeaderCellDef>Account #</th>
+          <td mat-cell *matCellDef="let transactions"> {{ transactions.accountNumber }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let transactions" class="text-end"> <span
+              [ngClass]="transactions.value < 0 ? 'text-danger' : 'text-success'">{{ transactions.value
+              | currency
+              }}</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnDef"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnDef;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 15, 25, 100]" aria-label="Select page of transactions"></mat-paginator>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

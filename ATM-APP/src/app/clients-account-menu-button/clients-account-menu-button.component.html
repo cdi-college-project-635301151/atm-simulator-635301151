@@ -1,0 +1,28 @@
+<button mat-mini-fab [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openCreateAccountDialog()">
+    <mat-icon>exposure_plus_1</mat-icon>
+    <span>New Account</span>
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="payInterest">
+    <mat-icon>attach_money</mat-icon>
+    <span>Pay Interest</span>
+  </button>
+  <button mat-menu-item (click)="openMortgagePayable()">
+    <mat-icon>book</mat-icon>
+    <span>Pay Loans</span>
+  </button>
+</mat-menu>
+
+<mat-menu #payInterest="matMenu" xPosition="before">
+  <button mat-menu-item (click)="openPayInterestDialog('savings')">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <span>Savings 1%</span>
+  </button>
+  <button mat-menu-item (click)="openPayInterestDialog('line of credit')">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <span>Line of Credit 5%</span>
+  </button>
+</mat-menu>

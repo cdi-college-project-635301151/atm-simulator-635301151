@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>Transfer Between Accounts Form</h1>
+<div mat-dialog-content>
+  <form [formGroup]="accountTransferForm!">
+    <mat-form-field appearance="fill">
+      <mat-label>From Account</mat-label>
+      <mat-select formControlName="fromAccount">
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of accountGroupSelector" [label]="group.accountName.toString() |titlecase">
+          <mat-option *ngFor="let acc of group.accounts" [value]="acc.accountNumber" class="span-block">
+            <span>Account#: </span>{{acc.accountNumber}}
+            <span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>Balance: </span>{{acc.credit.toString() | currency}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="getFromAccountSelector.touched && getFromAccountSelector.invalid">
+        <mat-error *ngIf="getFromAccountSelector.hasError('required')">
+          Please select an account.
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="transferGrouptSelector">
+      <mat-label>To Account</mat-label>
+      <mat-select formControlName="toAccount">
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of transferGrouptSelector" [label]="group.accountName.toString() |titlecase">
+          <mat-option *ngFor="let acc of group.accounts" [value]="acc.accountNumber">
+            <span>Account#: </span>{{acc.accountNumber}}
+            <span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>Balance: </span>{{acc.credit.toString() | currency}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="getToAccountSelector.touched && getToAccountSelector.invalid">
+        <mat-error *ngIf="getToAccountSelector.hasError('required')">
+          Please select an account.
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always" *ngIf="transferGrouptSelector.length > 0">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amountToTransfer" class="example-right-align" placeholder="0">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-error *ngIf="getAmountToTransfer.touched && getAmountToTransfer.invalid">
+        <mat-error *ngIf="getAmountToTransfer.hasError('required')">
+          Amount to transfer is required.
+        </mat-error>
+        <mat-error *ngIf="getAmountToTransfer.hasError('pattern')">
+          Invalid amount, pleace correct input.
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+
+    <span [ngClass]="transferError ? 'text-danger' : 'text-warning'">{{transferMessage}}</span>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [disabled]="!accountTransferForm!.valid || transferError"
+    (click)="submitRequest()">Submit</button>
+  <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+</div>

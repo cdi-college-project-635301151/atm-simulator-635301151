@@ -1,0 +1,94 @@
+<div class="card">
+  <h2 class="card-header">
+    {{data.title}}
+  </h2>
+  <div class="card-body">
+    <form class="example-form" [formGroup]="userForm" (submit)="submit()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName" placeholder="John">
+        <mat-error *ngIf="userForm.get('firstName')!.hasError('required')">
+          First name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName" placeholder="Doe">
+        <mat-error *ngIf="userForm.get('lastName')!.hasError('required')">
+          Last name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input type="text" matInput formControlName="phoneNumber" placeholder="555-555-8888">
+        <mat-error *ngIf="userForm.get('phoneNumber')!.hasError('required')">
+          Phone number is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="userForm.get('email')!.hasError('email') && !userForm.get('email')!.hasError('required')">
+          Please provide a valid email.
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email')!.hasError('required')">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+
+      <div formGroupName="address">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Street Address</mat-label>
+          <input type="text" matInput formControlName="streetAddress" placeholder="123 Streen Name">
+          <mat-error *ngIf="userForm.get('address.streetAddress')!.hasError('required')">
+            Street address is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Address 2</mat-label>
+          <input type="text" matInput formControlName="addressDesc" placeholder="Address Second Line">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <input type="text" matInput formControlName="city" placeholder="City">
+          <mat-error *ngIf="userForm.get('address.city')!.hasError('required')">
+            City is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Province</mat-label>
+          <input type="text" matInput formControlName="province" placeholder="ON" maxlength="2">
+          <mat-error *ngIf="userForm.get('address.province')!.hasError('required')">
+            Pronvince is required.
+          </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Postal</mat-label>
+          <input type="text" matInput formControlName="postal" placeholder="A1BC2D" maxlength="6">
+          <mat-error *ngIf="userForm.get('address.postal')!.hasError('required')">
+            Postal code is required.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div align="end">
+        <button type="button" mat-dialog-close mat-raised-button
+          class="bg-secondary text-white m-right-5">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!userForm.valid">Submit</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

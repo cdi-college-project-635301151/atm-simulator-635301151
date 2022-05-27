@@ -1,0 +1,16 @@
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+
+button {
+  margin: 5px !important;
+}
+
+.mat-menu-panel {
+  overflow-x: hidden !important;
+}
+
+.m-10 {
+  margin: 10px !important;
+}

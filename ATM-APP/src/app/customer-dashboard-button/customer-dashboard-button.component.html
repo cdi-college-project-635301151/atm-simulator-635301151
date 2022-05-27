@@ -1,0 +1,45 @@
+<button mat-mini-fab color="accent" [matMenuTriggerFor]="menu" aria-label="Clients dahsboard button menu">
+  <mat-icon>apps</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openDepositForm()">
+    <mat-icon>monetization_on</mat-icon>
+    <span>Deposit</span>
+  </button>
+  <button mat-menu-item (click)="openAccountTransferForm()">
+    <mat-icon>local_atm</mat-icon>
+    <span>Transfer Between Accounts</span>
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="payBillsMenu" aria-label="Open Bills menu">
+    <mat-icon>credit_card</mat-icon>
+    <span>Bills & Payments</span>
+  </button>
+  <mat-menu #payBillsMenu="matMenu">
+    <button mat-menu-item (click)="openPayBillsForm()">
+      <mat-icon>assignment_turned_in</mat-icon>
+      <span>Pay Bill</span>
+    </button>
+    <button mat-menu-item (click)="openAddPayeeForm()">
+      <mat-icon>person_add</mat-icon>
+      <span>Add Payee</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>person_pin</mat-icon>
+      <span>Update Payee</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>contacts</mat-icon>
+      <span>Show Payees</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>delete_sweep</mat-icon>
+      <span>Cancell/Stop Payments</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>cached</mat-icon>
+      <span>View Past Payments</span>
+    </button>
+  </mat-menu>
+
+</mat-menu>

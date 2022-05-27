@@ -1,0 +1,63 @@
+<mat-card-title>
+  Lists of Payable Accounts
+</mat-card-title>
+<mat-card-subtitle>
+  <span *ngIf="data._accountType === 'savings'">Accounts payable by 1%</span>
+  <span *ngIf="data._accountType === 'line of credit'">Accounts payable by 5%</span>
+</mat-card-subtitle>
+<mat-dialog-content class="mat-typography">
+
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- number Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{ getIndex(element._id) }}. </td>
+      </ng-container>
+
+      <!-- accountType Column -->
+      <ng-container matColumnDef="accountType">
+        <th mat-header-cell *matHeaderCellDef> Account Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.accountType | titlecase}} </td>
+      </ng-container>
+
+      <!-- accountNumber Column -->
+      <ng-container matColumnDef="accountNumber">
+        <th mat-header-cell *matHeaderCellDef> Account Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+      </ng-container>
+
+      <!-- balance Column -->
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef> Balance </th>
+        <td mat-cell *matCellDef="let element">
+          <span [ngClass]="element.credit > 0 ? 'text-success' : 'text-danger'">
+            {{element.credit | currency}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.isActive ? 'Active': 'Inactive' }} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="columnHeaders"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnHeaders;"></tr>
+    </table>
+
+  </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button [disabled]="userAccounts.length === 0" color="accent"
+    (click)="confirmPayment()">Confirm</button>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial color="accent">Close</button>
+</mat-dialog-actions>

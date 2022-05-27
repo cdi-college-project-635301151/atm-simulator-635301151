@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    ATM Deposit Form
+  </div>
+  <div class="card-body">
+    <div class="container">
+      <span class="card-title">ATM Balance: {{ atm?.balance?.toString() | currency }} </span>
+
+      <form [formGroup]="formDeposit" class="m-t5">
+        <mat-grid-list cols="2" rowHeight="2:1" *ngFor="let deposit of deposits">
+          <mat-grid-tile colspan="2" class="bg-dark text-success bg-screen">
+            {{ currentDeposit | currency }}
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="primary" class="big-button" (click)="addDeposit(deposit.five)"> {{
+              deposit.five | currency}} </button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="primary" class="big-button" (click)="addDeposit(deposit.ten)"> {{
+              deposit.ten | currency}} </button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="primary" class="big-button" (click)="addDeposit(deposit.fifteen)"> {{
+              deposit.fifteen | currency}} </button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="primary" class="big-button" (click)="addDeposit(deposit.twenty)"> {{
+              deposit.twenty | currency}} </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-error *ngIf="!formDeposit.valid && errorMsg" class="text-center">
+          {{ errorMsg }}
+        </mat-error>
+        <mat-form-field hidden formGroupName="history">
+          <input type="text" matInput formControlName="value">
+        </mat-form-field>
+      </form>
+
+    </div>
+  </div>
+  <div class="card-footer" align="end">
+    <div class="container">
+      <button mat-raised-button color="primary" class="m-r5" (click)="submitForm()"
+        [disabled]="!formDeposit.valid">Submit</button>
+      <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+</div>
